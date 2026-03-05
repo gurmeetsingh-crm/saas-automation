@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS CRM Case Study — Rounak</title>
+<meta name="description" content="How I stopped a SaaS company from losing the customers they were already paying to acquire">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600;1,9..144,700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#faf7f2;color:#3d3530;font-family:'Outfit',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.7}
+  ::-webkit-scrollbar{width:5px}
+  ::-webkit-scrollbar-track{background:#faf7f2}
+  ::-webkit-scrollbar-thumb{background:#cdc4b8;border-radius:3px}
+  ::selection{background:rgba(186,73,49,0.12);color:#3d3530}
+  a{color:inherit;text-decoration:none}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useRef, useEffect } = React;
+
+const useInView=(t=0.1)=>{const r=useRef(null);const[v,s]=useState(false);useEffect(()=>{const e=r.current;if(!e)return;const o=new IntersectionObserver(([x])=>{if(x.isIntersecting){s(true);o.disconnect()}},{threshold:t});o.observe(e);return()=>o.disconnect()},[]);return[r,v]};
+const F=({children,delay=0,style={}})=>{const[r,v]=useInView(0.06);return React.createElement("div",{ref:r,style:{opacity:v?1:0,transform:v?"none":"translateY(36px)",transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,...style}},children)};
+
+// Warm palette
+const terra="#ba4931",terraDim="#9c3f2b",terraBg="rgba(186,73,49,0.05)",terraBorder="rgba(186,73,49,0.15)";
+const ink="#1f1a16",warm="#3d3530",stone="#7a7068",sand="#a39a90",light="#cdc4b8";
+const cream="#faf7f2",paper="#f2ece3",linen="#e8e0d4";
+const forest="#2d6a4f",sky="#4a80b4",amber="#c48a1a",plum="#7b5ea7",rose="#c25d6e";
+const serif="'Fraunces',Georgia,serif",mono="'IBM Plex Mono',monospace";
+
+function App(){
+  const [hovDel,setHovDel]=useState(null);
+  const wrap={maxWidth:920,margin:"0 auto",padding:"0 32px"};
+
+  return React.createElement("div",{style:{background:cream,minHeight:"100vh"}},
+
+    // NAV
+    React.createElement("nav",{style:{padding:"24px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",maxWidth:920,margin:"0 auto",borderBottom:`1px solid ${linen}`}},
+      React.createElement("div",{style:{fontFamily:serif,fontSize:20,color:ink,fontStyle:"italic",fontWeight:600}},"R."),
+      React.createElement("div",{style:{display:"flex",gap:24,alignItems:"center"}},
+        React.createElement("span",{style:{fontSize:12,fontFamily:mono,color:sand,letterSpacing:"0.06em"}},"CASE STUDY"),
+        React.createElement("a",{href:"PASTE_YOUR_UPWORK_URL_HERE",target:"_blank",rel:"noopener noreferrer",style:{fontSize:12,fontWeight:600,color:terra,letterSpacing:"0.04em",padding:"7px 18px",borderRadius:8,border:`1.5px solid ${terraBorder}`,transition:"all 0.3s ease"}},"HIRE ME")
+      )
+    ),
+
+    // ═══ HERO ═══
+    React.createElement("section",{style:{padding:"100px 32px 80px",maxWidth:920,margin:"0 auto",borderBottom:`1px solid ${linen}`}},
+      React.createElement(F,{delay:0},
+        React.createElement("div",{style:{display:"inline-flex",alignItems:"center",gap:8,padding:"5px 14px",borderRadius:20,background:terraBg,border:`1px solid ${terraBorder}`,marginBottom:36}},
+          React.createElement("div",{style:{width:6,height:6,borderRadius:3,background:terra}}),
+          React.createElement("span",{style:{fontSize:11,fontWeight:600,color:terra,letterSpacing:"0.06em",textTransform:"uppercase"}},"B2B SaaS \u2014 Project Management Platform")
+        )
+      ),
+      React.createElement(F,{delay:0.1},
+        React.createElement("h1",{style:{fontFamily:serif,fontSize:"clamp(42px,6.5vw,76px)",fontWeight:300,lineHeight:1.06,color:ink,maxWidth:780,marginBottom:32,letterSpacing:"-0.02em"}},
+          "Thousands were signing up.",
+          React.createElement("br"),
+          React.createElement("span",{style:{fontWeight:700,fontStyle:"italic",color:terra}},"Almost nobody stayed.")
+        )
+      ),
+      React.createElement(F,{delay:0.22},
+        React.createElement("p",{style:{fontSize:18,color:stone,maxWidth:580,lineHeight:1.85,marginBottom:56}},
+          "A per-seat project management tool for agencies and consulting teams. Solid product, good reviews, ",
+          React.createElement("span",{style:{color:warm,fontWeight:600}},"~11% trial-to-paid conversion and 5% monthly churn."),
+          " The team had no early warning system, no lifecycle tracking, and no way to tell who was about to leave. I built the system that changed all of that."
+        )
+      ),
+      // Stats row
+      React.createElement(F,{delay:0.32},
+        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(160px, 1fr))",gap:0}},
+          [{val:"30-Day",sub:"Trial Nurture",bd:true},{val:"5",sub:"CRM Modules",bd:true},{val:"38+",sub:"Touchpoints",bd:true},{val:"6",sub:"Risk Triggers",bd:false}].map((m,i)=>
+            React.createElement("div",{key:i,style:{padding:"24px 0",borderRight:m.bd?`1px solid ${linen}`:"none",paddingRight:m.bd?24:0,paddingLeft:i>0?24:0}},
+              React.createElement("div",{style:{fontSize:30,fontWeight:800,color:ink,fontFamily:serif,letterSpacing:"-0.02em"}},m.val),
+              React.createElement("div",{style:{fontSize:12,color:sand,marginTop:4,letterSpacing:"0.02em"}},m.sub)
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ THE PROBLEM ═══
+    React.createElement("section",{style:{padding:"88px 32px",maxWidth:920,margin:"0 auto"}},
+      React.createElement(F,null,
+        React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:rose,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}},"WHAT WAS GOING WRONG")
+      ),
+      React.createElement(F,{delay:0.1},
+        React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4vw,42px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:650,marginBottom:28}},
+          "They were paying to get people in the door. ",
+          React.createElement("span",{style:{color:stone,fontWeight:300}},"Then watching them leave.")
+        )
+      ),
+      React.createElement(F,{delay:0.18},
+        React.createElement("p",{style:{fontSize:16,color:stone,maxWidth:560,lineHeight:1.8,marginBottom:52}},
+          "The product had time tracking, Gantt charts, client billing, team collaboration \u2014 everything an agency needs. Agencies who actually used it loved it. The problem was the gap between signing up and getting there."
+        )
+      ),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(260px, 1fr))",gap:20}},
+        [
+          {num:"01",title:"Trial users tried it once and forgot about it",desc:"Someone from a 15-person agency would sign up, click around for 3 minutes, get distracted, and never come back. 30 days later the trial expired silently. The data showed that users who created their first project within 48 hours converted at 5x the rate \u2014 but nothing was being done with that insight.",color:terra},
+          {num:"02",title:"Paying customers left with no warning",desc:"An agency on the $20/seat Grow plan with 12 people would just\u2026 stop logging in. Two weeks of silence. Then the cancellation. No health metrics. No engagement tracking. The team found out about unhappy customers the day those customers quit.",color:rose},
+          {num:"03",title:"Upgrade-ready teams were being ignored",desc:"Some agencies had 8 out of 10 seats filled and were bumping into project limits weekly. Others were trying to use locked features three or four times a day. These were obvious upgrade conversations \u2014 but nobody could see the signals.",color:plum},
+          {num:"04",title:"All leads were treated the same",desc:"A marketing director who requested a demo sat in the same pipeline as someone who accidentally clicked a blog post. No scoring. No prioritization. Sales was spending equal time on a 200-person consultancy and a college student doing a class project.",color:sky},
+        ].map((p,i)=>
+          React.createElement(F,{key:i,delay:0.12+i*0.07},
+            React.createElement("div",{style:{background:paper,border:`1px solid ${linen}`,borderRadius:14,padding:"28px 24px",position:"relative",overflow:"hidden"}},
+              React.createElement("div",{style:{position:"absolute",top:0,left:0,width:3,height:"100%",background:p.color,borderRadius:"3px 0 0 3px"}}),
+              React.createElement("div",{style:{fontSize:12,fontWeight:700,color:p.color,fontFamily:mono,marginBottom:10}},p.num),
+              React.createElement("div",{style:{fontSize:15,fontWeight:700,color:ink,marginBottom:8}},p.title),
+              React.createElement("div",{style:{fontSize:13,color:stone,lineHeight:1.7}},p.desc)
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ BEFORE / AFTER ═══
+    React.createElement("section",{style:{background:paper,borderTop:`1px solid ${linen}`,borderBottom:`1px solid ${linen}`,padding:"88px 32px"}},
+      React.createElement("div",{style:wrap},
+        React.createElement(F,null,React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:forest,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}},"THE SHIFT")),
+        React.createElement(F,{delay:0.1},
+          React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4vw,42px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:650,marginBottom:20}},
+            "A system that ",
+            React.createElement("span",{style:{fontStyle:"italic",color:forest}},"watches, scores, and intervenes"),
+            " \u2014 before it\u2019s too late."
+          )
+        ),
+        React.createElement(F,{delay:0.2},
+          React.createElement("p",{style:{fontSize:16,color:stone,maxWidth:560,lineHeight:1.8,marginBottom:52}},
+            "The CRM went from a contact database to something that understood what each customer was doing \u2014 and what to do about it."
+          )
+        ),
+        React.createElement(F,{delay:0.25},
+          React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))",gap:24}},
+            // Before
+            React.createElement("div",{style:{background:cream,border:`1px solid ${linen}`,borderRadius:16,padding:32,position:"relative",overflow:"hidden"}},
+              React.createElement("div",{style:{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg, ${rose}, ${terra})`}}),
+              React.createElement("div",{style:{fontSize:11,fontWeight:700,color:rose,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:22}},"\u26D4  Before"),
+              ...["Trial users vanished and no one followed up","~11% trial-to-paid conversion with no nurture","~5% monthly churn \u2014 discovered at cancellation","No health scoring on any account","All leads treated the same regardless of intent","Expansion revenue left entirely on the table"].map((t,i)=>
+                React.createElement("div",{key:i,style:{display:"flex",gap:10,marginBottom:13,alignItems:"flex-start"}},
+                  React.createElement("span",{style:{color:rose,fontSize:14,marginTop:2,flexShrink:0}},"\u00D7"),
+                  React.createElement("span",{style:{fontSize:13,color:stone,lineHeight:1.6}},t)
+                )
+              )
+            ),
+            // After
+            React.createElement("div",{style:{background:cream,border:`1px solid ${linen}`,borderRadius:16,padding:32,position:"relative",overflow:"hidden"}},
+              React.createElement("div",{style:{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg, ${forest}, #4ade80)`}}),
+              React.createElement("div",{style:{fontSize:11,fontWeight:700,color:forest,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:22}},"\u2705  After"),
+              ...["30-day trial nurture adapting to what users actually do in the product","Activation milestones tracked: first project, first invite, first time entry, first client","Customer health score combining logins, features, support, and billing","Automatic alerts when engagement starts trending down \u2014 days before it\u2019s critical","Expansion triggers for seat limits, feature gates, and rapid team growth","Lead scoring with routing \u2014 serious buyers go to sales, rest get nurtured","Win-back sequences for churned customers with re-trial at 90 days"].map((t,i)=>
+                React.createElement("div",{key:i,style:{display:"flex",gap:10,marginBottom:13,alignItems:"flex-start"}},
+                  React.createElement("span",{style:{color:forest,fontSize:14,marginTop:2,flexShrink:0}},"\u2713"),
+                  React.createElement("span",{style:{fontSize:13,color:stone,lineHeight:1.6}},t)
+                )
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ HOW IT WORKS ═══
+    React.createElement("section",{style:{padding:"88px 32px",maxWidth:920,margin:"0 auto"}},
+      React.createElement(F,null,React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:amber,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}},"HOW IT WORKS")),
+      React.createElement(F,{delay:0.1},
+        React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4vw,42px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:650,marginBottom:52}},
+          "From the moment someone signs up to the day they ",
+          React.createElement("span",{style:{color:amber,fontStyle:"italic"}},"upgrade \u2014 or leave.")
+        )
+      ),
+      React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:0,position:"relative"}},
+        React.createElement("div",{style:{position:"absolute",left:15,top:22,bottom:22,width:1,background:`linear-gradient(to bottom, ${sky}40, ${terra}40, ${amber}40, ${forest}40, ${amber}40, ${plum}40)`}}),
+        [
+          {stage:"A lead shows up",when:"Download, webinar, demo request, or blog visit",auto:"The system scores them right away. It looks at what they did, what company they\u2019re from (auto-enriched via API), and how they\u2019ve been engaging. A marketing director from a 50-person agency who requested a demo gets fast-tracked to sales with full context. A student who clicked a blog post gets a helpful drip sequence instead.",color:sky,tag:"SCORING"},
+          {stage:"They start a free trial",when:"30-day trial begins \u2014 the clock is ticking",auto:"The system watches four activation milestones: did they create a project? invite a teammate? log time? add a client? Users who hit 3 of these in the first week converted at nearly 6x the rate. So the nurture is behavior-based, not calendar-based. Active users get tips about features they haven\u2019t tried. Stuck users get a \u201Cneed help?\u201D nudge. Ghost users get a more direct \u201Cyou\u2019re missing out\u201D email.",color:terra,tag:"TRIAL"},
+          {stage:"Trial is about to expire",when:"Day 25\u201330 \u2014 the conversion window",auto:"If someone\u2019s actively using the product but hasn\u2019t converted by day 27, the trial auto-extends by 7 days and sales gets their usage summary. If they\u2019ve been inactive, a last-chance email offers a fresh start. After expiry, a 3-email win-back fires at day 3, 10, and 21.",color:amber,tag:"CONVERSION"},
+          {stage:"They become a paying customer",when:"Subscription starts \u2014 retention begins",auto:"The system builds a health score: how often the team logs in (40%), how many features they use (25%), support interactions (20%), and billing health (15%). Green accounts get tips. Yellow accounts get a check-in. Red accounts trigger an immediate alert to the account manager with a full usage report.",color:forest,tag:"HEALTH"},
+          {stage:"Growing \u2014 or going quiet",when:"Ongoing monitoring for expansion and risk",auto:"For healthy accounts: 80% of seats filled triggers a heads-up. Hitting project limits triggers a suggestion. Trying locked features repeatedly queues an upgrade conversation. For declining accounts: if the health score drops 7 days straight or the team hasn\u2019t logged in for 14 days, intervention fires automatically with specifics \u2014 not just \u201Cat risk\u201D but exactly what changed and when.",color:amber,tag:"EXPANSION / RISK"},
+          {stage:"They leave \u2014 but maybe not forever",when:"Cancellation or subscription expires",auto:"Exit survey captures why. After a 7-day cooling period, a respectful sequence begins. Day 7: genuine thank-you, no pitch. Monthly: digest of new features. Day 90: offer to try again with old data intact. The system tracks what message finally brings people back, so the approach keeps getting smarter.",color:plum,tag:"WIN-BACK"},
+        ].map((s,i)=>
+          React.createElement(F,{key:i,delay:0.06+i*0.05},
+            React.createElement("div",{style:{display:"flex",gap:24,paddingBottom:36,position:"relative"}},
+              React.createElement("div",{style:{width:32,height:32,borderRadius:16,background:s.color+"10",border:`2px solid ${s.color}35`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1}},
+                React.createElement("div",{style:{width:8,height:8,borderRadius:4,background:s.color}})
+              ),
+              React.createElement("div",{style:{flex:1}},
+                React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:6,flexWrap:"wrap"}},
+                  React.createElement("span",{style:{fontSize:10,fontWeight:700,color:s.color,fontFamily:mono,padding:"2px 8px",borderRadius:4,background:s.color+"10",letterSpacing:"0.06em"}},s.tag),
+                  React.createElement("span",{style:{fontSize:15,fontWeight:700,color:ink}},s.stage)
+                ),
+                React.createElement("div",{style:{fontSize:12,color:sand,marginBottom:6}},
+                  React.createElement("span",{style:{fontWeight:600,color:stone}},"What happens: "),s.when
+                ),
+                React.createElement("div",{style:{fontSize:13,color:stone,lineHeight:1.75,background:paper,border:`1px solid ${linen}`,borderRadius:10,padding:"16px 20px",borderLeft:`3px solid ${s.color}25`}},s.auto)
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ HARD PROBLEMS ═══
+    React.createElement("section",{style:{background:paper,borderTop:`1px solid ${linen}`,borderBottom:`1px solid ${linen}`,padding:"88px 32px"}},
+      React.createElement("div",{style:wrap},
+        React.createElement(F,null,React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:terra,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}},"THE HARD PARTS")),
+        React.createElement(F,{delay:0.1},
+          React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4vw,42px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:650,marginBottom:20}},
+            "This wasn\u2019t drag-and-drop. ",
+            React.createElement("span",{style:{fontWeight:300,color:stone}},"These were real problems.")
+          )
+        ),
+        React.createElement(F,{delay:0.18},
+          React.createElement("p",{style:{fontSize:16,color:stone,maxWidth:560,lineHeight:1.8,marginBottom:48}},
+            "Every automation project runs into edge cases nobody expects. Here\u2019s what actually made this one hard."
+          )
+        ),
+        React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:14}},
+          [
+            {title:"Health scores updating from three places at once",desc:"A customer logs in, submits a support ticket, and their monthly invoice processes \u2014 all within seconds. Each event wants to recalculate the health score. Without careful handling, three calculations step on each other and the final number is wrong. I built a batching system that collects all signals in a window, then calculates once.",tag:"Timing",color:terra},
+            {title:"Trial users triggering contradictory emails",desc:"What happens when someone hasn\u2019t logged in for 3 days BUT they just created their first project this morning? One automation wants to send \u201Cneed help?\u201D and another wants to send \u201Cnice work, try this next.\u201D I built a priority system so the most relevant message always wins.",tag:"Logic",color:amber},
+            {title:"30-day trials across 20+ time zones",desc:"A trial starting at 11pm in New York is almost Day 2 in Singapore already. Expiry warnings, milestone emails, and countdown logic all needed to respect where the customer actually is \u2014 otherwise you\u2019re sending \u201C3 days left!\u201D at 3am their time.",tag:"Global",color:sky},
+            {title:"Backfilling scores for 2,000+ existing accounts",desc:"When health scoring went live, every existing customer had no score. Starting them at zero would flag every account as \u201Cat risk\u201D and flood the CS team with false alarms. I built a backfill that processed months of historical data to generate accurate starting scores without hitting API rate limits.",tag:"Migration",color:forest},
+            {title:"Same message trying to go out on three channels",desc:"A trial expiry warning could trigger via email, push, and in-app simultaneously. Nobody wants that. I built channel preference logic so the primary channel sends first, and backups only fire if there\u2019s no engagement within a few hours.",tag:"Coordination",color:plum},
+          ].map((ch,i)=>
+            React.createElement(F,{key:i,delay:0.06+i*0.05},
+              React.createElement("div",{style:{background:cream,border:`1px solid ${linen}`,borderRadius:12,padding:"22px 26px",borderLeft:`3px solid ${ch.color}`}},
+                React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:8,flexWrap:"wrap"}},
+                  React.createElement("span",{style:{fontSize:14,fontWeight:700,color:ink}},ch.title),
+                  React.createElement("span",{style:{fontSize:10,fontWeight:600,padding:"2px 10px",borderRadius:20,background:ch.color+"10",color:ch.color,fontFamily:mono,letterSpacing:"0.04em",textTransform:"uppercase"}},ch.tag)
+                ),
+                React.createElement("div",{style:{fontSize:13,color:stone,lineHeight:1.75}},ch.desc)
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ DELIVERABLES ═══
+    React.createElement("section",{style:{padding:"88px 32px",maxWidth:920,margin:"0 auto"}},
+      React.createElement(F,null,React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:forest,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}},"WHAT THEY GOT")),
+      React.createElement(F,{delay:0.1},
+        React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4vw,42px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:650,marginBottom:48}},
+          "Not just code. A complete, ",
+          React.createElement("span",{style:{fontStyle:"italic",color:forest}},"documented system"),
+          " their team can maintain."
+        )
+      ),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(270px, 1fr))",gap:20}},
+        [
+          {icon:"\u26A1",title:"10 Custom Automations",desc:"Lead scoring and routing, 30-day behavioral trial nurture, health score calculator with batch processing, churn risk detection, expansion trigger monitoring, win-back sequences \u2014 all with detailed logging so the team can troubleshoot without calling me.",color:terra},
+          {icon:"\u2709\uFE0F",title:"38 Automated Touchpoints",desc:"Trial nurture (10 behavior-based emails), onboarding (6 milestone triggers), churn prevention (4 intervention sequences), win-back (5 emails over 90 days), expansion suggestions (4 usage-triggered), plus instant alerts. All written to sound like a person, not a funnel.",color:amber},
+          {icon:"\uD83D\uDCCA",title:"Dashboards & Reporting",desc:"Trial conversion funnel showing exactly where people drop off. Customer health distribution at a glance. Lead quality by source. Expansion pipeline. Retention cohort analysis. All in Zoho Analytics with GA4 integration.",color:sky},
+          {icon:"\uD83D\uDCC4",title:"Full Documentation",desc:"System architecture map. How every automation works and why. All email content with reasoning behind each message. Health score methodology. Maintenance guide and troubleshooting runbook. Training materials for the CS team.",color:forest},
+        ].map((d,i)=>
+          React.createElement(F,{key:i,delay:0.08+i*0.06},
+            React.createElement("div",{
+              onMouseEnter:()=>setHovDel(i),onMouseLeave:()=>setHovDel(null),
+              style:{background:paper,border:`1px solid ${hovDel===i?d.color+"35":linen}`,borderRadius:14,padding:28,transition:"all 0.3s ease",position:"relative",overflow:"hidden"}
+            },
+              React.createElement("div",{style:{position:"absolute",top:0,left:0,right:0,height:3,background:hovDel===i?d.color:"transparent",transition:"all 0.3s ease"}}),
+              React.createElement("div",{style:{fontSize:28,marginBottom:14}},d.icon),
+              React.createElement("div",{style:{fontSize:15,fontWeight:700,color:ink,marginBottom:10}},d.title),
+              React.createElement("div",{style:{fontSize:13,color:stone,lineHeight:1.75}},d.desc)
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ TECH ═══
+    React.createElement("section",{style:{padding:"56px 32px",background:paper,borderTop:`1px solid ${linen}`,borderBottom:`1px solid ${linen}`}},
+      React.createElement("div",{style:{...wrap,textAlign:"center"}},
+        React.createElement(F,null,React.createElement("div",{style:{fontSize:11,fontFamily:mono,fontWeight:600,color:sand,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:24}},"BUILT WITH")),
+        React.createElement(F,{delay:0.08},
+          React.createElement("div",{style:{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}},
+            ["Zoho CRM","Deluge Scripting","Zoho Analytics","Zoho Campaigns","Google Analytics 4","REST APIs","Webhooks","Push Notifications","Email Sequences","Health Scoring"].map((t,i)=>
+              React.createElement("span",{key:i,style:{padding:"7px 16px",borderRadius:8,fontSize:13,fontWeight:500,color:stone,border:`1px solid ${linen}`,background:cream}},t)
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ CTA ═══
+    React.createElement("section",{style:{padding:"88px 32px 100px",maxWidth:920,margin:"0 auto"}},
+      React.createElement("div",{style:{textAlign:"center"}},
+        React.createElement(F,null,
+          React.createElement("h2",{style:{fontFamily:serif,fontSize:"clamp(28px,4.5vw,48px)",fontWeight:700,color:ink,lineHeight:1.12,maxWidth:600,margin:"0 auto 20px"}},
+            "Need someone who builds systems, ",
+            React.createElement("span",{style:{fontStyle:"italic",color:terra}},"not just configurations?")
+          )
+        ),
+        React.createElement(F,{delay:0.1},
+          React.createElement("p",{style:{fontSize:16,color:stone,maxWidth:480,margin:"0 auto 40px",lineHeight:1.75}},
+            "I build CRM systems that understand your customer lifecycle and act on it \u2014 with real engineering, clean documentation, and a handoff your team can own."
+          )
+        ),
+        React.createElement(F,{delay:0.2},
+          React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:20}},
+            React.createElement("a",{href:"PASTE_YOUR_UPWORK_URL_HERE",target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 38px",borderRadius:10,background:terra,color:"#fff",fontSize:15,fontWeight:600,letterSpacing:"0.02em",cursor:"pointer",textDecoration:"none"}},
+              "Let\u2019s Talk About Your Project"," \u2192"
+            ),
+            React.createElement("div",{style:{fontSize:13,color:sand}},"Usually available within 24 hours")
+          )
+        ),
+        React.createElement(F,{delay:0.3},
+          React.createElement("div",{style:{marginTop:72,paddingTop:36,borderTop:`1px solid ${linen}`}},
+            React.createElement("div",{style:{fontSize:11,letterSpacing:"0.1em",color:sand,textTransform:"uppercase",marginBottom:6,fontFamily:mono}},"Built by"),
+            React.createElement("div",{style:{fontSize:22,fontWeight:800,color:ink,fontFamily:serif}},"Rounak"),
+            React.createElement("div",{style:{fontSize:13,color:sand,marginTop:4}},"CRM Automation \u00B7 SaaS Lifecycle Systems \u00B7 Analytics")
+          )
+        )
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
